@@ -1,0 +1,59 @@
+#!/bin/bash
+#remove existing customers from the file CustomerDetails 
+#Enter either <Name> or <Alias> to remove
+# check to see if CustomerDetails exists and if not then create it with the header
+if grep -q "Address" CustomerDetails 
+	then 
+	echo CustomerDetails already exits 
+else
+	printf "\n %-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+fi
+clear
+# ANSI colour an formats moved to more readable variables names, can change echo colours
+# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
+BLUE='\033[01;34m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
+echo
+echo -e ${PURPLE}_______________________________________________________________________________ ${NONE}
+echo -e "${PURPLE} ____                                ____          _                            ${NONE}"
+echo -e "${PURPLE}|  _ \ ___ _ __ ___   _____   _____ / ___|   _ ___| |_ ___  _ __ ___   ___ _ __ ${NONE}"
+echo -e "${PURPLE}| |_) / _ \ '_ ' _ \ / _ \ \ / / _ \ |  | | | / __| __/ _ \| '_ ' _ \ / _ \ '__|${NONE}"
+echo -e "${PURPLE}|  _ <  __/ | | | | | (_) \ V /  __/ |__| |_| \__ \ || (_) | | | | | |  __/ |   ${NONE}"
+echo -e "${PURPLE}|_| \_\___|_| |_| |_|\___/ \_/ \___|\____\__,_|___/\__\___/|_| |_| |_|\___|_|   ${NONE}"                                                        
+echo -e ${PURPLE}_______________________________________________________________________________ ${NONE}
+echo -e ${PURPLE}_______________________________________________________________________________ ${NONE}
+echo
+echo Enter the Name or Alias of the customer delete :
+read Name
+echo
+echo =========================================================================================
+echo
+grep $Name CustomerDetails
+echo
+echo =========================================================================================
+echo "Please confirm you wish to delete (y/n):"
+read confirm
+if [[ $confirm = 'y' ]]
+	then
+	# searches for the string in the Name variable and deletes the line it is on
+	sed -i "/$Name/d" CustomerDetails
+	echo Customer deleted
+fi
+echo
+echo -e "${RED}Do you wish to return to the Menu ?(y/n) ${NONE}"
+read yesno
+if  [[ $yesno = "y" ]]
+	then 
+	  ./Menu
+else
+	echo Goodbye
+fi
+

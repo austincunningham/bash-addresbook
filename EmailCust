@@ -1,0 +1,93 @@
+#!/bin/bash
+#Email a customers from the file CustomerDetails 
+#Enter a customer email address to email
+# check to see if CustomerDetails exists and if not then create it with the header
+if grep -q "Address" CustomerDetails 
+	then 
+	echo CustomerDetails already exits 
+else
+	printf "\n %-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+fi
+clear
+# ANSI colour an formats moved to more readable variables names, can change echo colours
+# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
+BLUE='\033[01;34m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
+echo
+echo -e ${RED}________________________________________________________________________${NONE} 
+echo -e "${RED} _____                 _ _  ____          _                            ${NONE}"
+echo -e "${RED}| ____|_ __ ___   __ _(_) |/ ___|   _ ___| |_ ___  _ __ ___   ___ _ __ ${NONE}"
+echo -e "${RED}|  _| | '_ ' _ \ / _' | | | |  | | | / __| __/ _ \| '_ ' _ \ / _ \ '__|${NONE}"
+echo -e "${RED}| |___| | | | | | (_| | | | |__| |_| \__ \ || (_) | | | | | |  __/ |   ${NONE}"
+echo -e "${RED}|_____|_| |_| |_|\__,_|_|_|\____\__,_|___/\__\___/|_| |_| |_|\___|_|   ${NONE}"
+echo -e ${RED}________________________________________________________________________${NONE} 
+echo -e ${RED}________________________________________________________________________${NONE} 
+echo
+################################################################################################################
+# grep searches for a string that matches email format in file CustomerDetails  and outputs to temp file       #
+# -E switch allows uses of extended regular expression ERE                                                     #
+# -o switch only prints non empty parts of the string found i.e. no spaces                                     #
+# the search string has 4 parts                                                                                #
+# [A-Za-z0-9._%+-] any of the following characters can make up the string beteen [],                           #
+# letter a to z in upper and lower case ,numbers 0 to 9 and the following special characters ._%+-             #
+# +@ at is added to the first string                                                                           #
+# second string is the same as the first but only the following special characters .- include                  #
+# +\. adds a dot to the end of the second string                                                               #
+# [A-Za-z] last string letter a to z in upper and lower case                                                   #
+# {n,m}  The  preceding  item  is  matched  at  least n times, but not more than m times.                      #
+# >> use standard output to a temp file                                                                        #
+# The symbol \b matches the empty string at the edge of a word , in this case at the beginning and the end     #
+################################################################################################################
+grep -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerDetails >> temp
+# prompt user to see if they want to send a group mail
+echo "Do you wish to send an email everyone ? (y/n)"
+# waiting for response at prompt and passing value to variable "everyone"
+read everyone
+# if statment to check to see if variable "everyone" is set to y, if not go to else statment
+if [[ $everyone = "y" ]]
+	then
+	# prompt and wait for responce for subject and message body
+	echo Subject:
+	read Subject
+	echo Message body:
+	read Message
+	# echo the message and pipe it to the mailx command -s is the subject switch and 
+	# then you put in the email address in this case we are pulling the mail address from the temp file
+	# mailutils needs to be installed for this to work "sudo apt-get install mailutils"
+	echo "$Message" | mailx -s "$Subject" $(<temp)
+	# this echo is just to show that the command above has completed , it doesn't gurantee delivery
+	echo message sent
+else
+	echo Enter email address:
+	read Email
+	echo Subject:
+	read Subject
+	echo Message body:
+	read Message
+	echo "$Message" | mailx -s "$Subject" "$Email"
+	echo message sent
+fi
+# remove the temp file
+rm temp
+echo
+echo -e "${RED}Do you wish to return to the Menu ?(y/n) ${NONE}"
+read yesno
+if  [[ $yesno = "y" ]]
+	then 
+	  ./Menu
+else
+	echo Goodbye
+fi
+
+
+
+
+

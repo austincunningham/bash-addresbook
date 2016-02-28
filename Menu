@@ -1,0 +1,64 @@
+#!/bin/bash
+# Menu program menu to access four other programs
+# AddCust program to add a customer to an address list
+# RemCust program to remove a customer from an address list
+# FindCust program to find a customer on details submitted
+# EmailCust program to email a customer
+clear
+# clears the screen then echo displays the text menus and banner
+# ANSI colour an formats moved to more readable variables names, can change echo colours
+# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
+BLUE='\033[01;34m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
+echo
+echo -e ${GREEN} ____________________________________________________________ ${NONE}
+echo -e " ${GREEN}              __  __                        ${NONE}"
+echo -e " ${GREEN}             |  \/  |   ___   _ __    _   _ ${NONE}"
+echo -e " ${GREEN}             | |\/| |  / _ \ | '_ \  | | | |${NONE}"
+echo -e " ${GREEN}             | |  | | |  __/ | | | | | |_| |${NONE}"
+echo -e " ${GREEN}             |_|  |_|  \___| |_| |_|  \__,_|${NONE}"
+echo -e ${GREEN} ____________________________________________________________ ${NONE}
+echo -e ${GREEN} ____________________________________________________________ ${NONE}
+echo -e " ${BLUE} ______________________________________________${NONE} "
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}| Welcome. Please choose one of the following: |${NONE}"
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}|${NONE}   ${YELLOW}1. Add a new Customer ${NONE}                     ${BLUE}|${NONE}"
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}|${NONE}   ${YELLOW}2. Remove an existing Customer ${NONE}            ${BLUE}|${NONE}"
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}|${NONE}   ${YELLOW}3. Search for a Customer ${NONE}                  ${BLUE}|${NONE}"
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}|${NONE}   ${YELLOW}4. E-mail a Customer ${NONE}                      ${BLUE}|${NONE}"
+echo -e " ${BLUE}|                                              |${NONE}"
+echo -e " ${BLUE}| Enter a Number or q to quit :                |${NONE}"
+echo -e " ${BLUE}|______________________________________________|${NONE}"
+echo
+# read waits for input from customer looking for number 1 and 4 will exit with x or q 
+# Menu will reload if none of the conditions ment at the prompt
+read Number
+# this case statment waits for an imput between 1 and 4 and runs the corrisponding script
+case $Number in
+	1) ./AddCust
+	;;
+	2) ./RemCust
+	;;
+	3) ./FindCust
+	;;
+	4) ./EmailCust
+	;;
+	q) echo Good Bye
+	;;
+	x) echo So Long
+	;;
+	*) ./Menu
+	;;
+esac
