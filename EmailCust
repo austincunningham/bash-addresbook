@@ -6,7 +6,7 @@ if grep -q "Address" CustomerDetails
 	then 
 	echo CustomerDetails already exits 
 else
-	printf "\n %-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
 fi
 clear
 # ANSI colour an formats moved to more readable variables names, can change echo colours

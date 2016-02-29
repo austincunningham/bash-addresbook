@@ -6,7 +6,7 @@ if grep -q "Address" CustomerDetails
 	then 
 	echo CustomerDetails already exits 
 else
-	printf "\n %-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
 fi
 clear
 # ANSI colour an formats moved to more readable variables names, can change echo colours
@@ -34,11 +34,11 @@ echo
 echo Enter the Name or Alias of the customer delete :
 read Name
 echo
-echo =========================================================================================
+echo ================================================================================
 echo
 grep $Name CustomerDetails
 echo
-echo =========================================================================================
+echo ================================================================================
 echo "Please confirm you wish to delete (y/n):"
 read confirm
 if [[ $confirm = 'y' ]]
