@@ -1,13 +1,20 @@
 #!/bin/bash
 #Add new customers to file CustomerDetails in the format
 #<E-mail Address>   <Name>   <Alias>   <Address>   <Telephone Number>
+# printf allow you to format the input of a print statment, in this case it formats the file CustomerDetails
 # check to see if CustomerDetails exists and if not then create it with the header
+clear
 if grep -q "Address" CustomerDetails 
 	then 
-	echo CustomerDetails already exits 
+	echo
+	echo CustomerDetails already exits
+
 else
+	echo
+	echo "Creating CustomerDetails file as none exists"
 	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
 fi
+sleep 1
 clear
 # ANSI colour an formats moved to more readable variables names, can change echo colours
 # the NONE is to turn off the format, echo -e enables the colour, may not use all of these
@@ -30,30 +37,80 @@ echo -e " ${CYAN} / ___ \ (_| | (_| | |__| |_| \__ \ || (_) | | | | | |  __/ |  
 echo -e " ${CYAN}/_/   \_\__,_|\__,_|\____\__,_|___/\__\___/|_| |_| |_|\___|_|   ${NONE}"                                            
 echo -e ${CYAN}_________________________________________________________________ ${NONE}                                                           
 echo -e ${CYAN}_________________________________________________________________ ${NONE}
-echo Enter the following customer details 
+echo -e ${CYAN}Enter the following customer details ${NONE} 
 echo
-echo -e ${YELLOW}Name :${NONE}
+echo -e ${CYAN}Name :${NONE}
 read Name
+# -z checks variable Name to see if it is blank, if it is blank a message is printed 
+# will run a while loop until correct input all read statements are treated the same.
+while [ -z "$Name" ]
+do  
+    echo 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo
+	echo -e ${CYAN}Name :${NONE}
+	read Name
+done
 echo
-echo -e ${YELLOW}E-mail Address :${NONE}
+echo -e ${CYAN}E-mail Address :${NONE}
 read Email
+while [ -z "$Email" ]
+do  
+    echo 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo
+	echo -e ${CYAN}Email :${NONE}
+	read Email
+done
 echo
-echo -e ${YELLOW}Alias :${NONE}
+echo -e ${CYAN}Alias :${NONE}
 read Alias
+while [ -z "$Alias" ]
+do  
+    echo 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo
+	echo -e ${CYAN}Alias :${NONE}
+	read Alias
+done
 echo
-echo -e ${YELLOW}Address :${NONE}
+echo -e ${CYAN}Address :${NONE}
 read Address
+while [ -z "$Address" ]
+do  
+    echo 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo
+	echo -e ${CYAN}Address :${NONE}
+	read Address
+done
 echo
-echo -e ${YELLOW}Telephone Number :${NONE}
+echo -e ${CYAN}Telephone Number :${NONE}
 read Telephone
+while [ -z "$Telephone" ]
+do  
+    echo 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo
+	echo -e ${CYAN}Telephone :${NONE}
+	read Telephone
+done
 echo
+# following statment adds a new line to the end of the file CustomerDetails with the strings for the 
+# variables inputed above, printf has a formatting component 
+# \n new line
+# %-30s left justified ,place holder for 30 character string , other examples are similar 8 and 20 respectivly 
 printf "\n%-30s %-8s %-8s %-20s %s" "$Email" "$Name" "$Alias" "$Address" "$Telephone" >> CustomerDetails
 echo
-echo -e "${RED}Do you wish to return to the Menu ?(y/n)${NONE}" 
+# return to the Menu, anything entered other that y-Y including blank spaces will go to the else option and print message and exit to shell
+# entering y-Y and you meet the if condition and call the script for Menu
+echo -e "${RED}Enter 'y' to return to the Menu  ${NONE}"
+echo -e "${RED}Enter any other key to exit ${NONE}"
 read yesno
-if  [[ $yesno = "y" ]]
+if  [[ $yesno = "y" || $yesno = "Y" ]]
 	then 
 	  ./Menu
 else
 	echo Goodbye
+	exit 113
 fi

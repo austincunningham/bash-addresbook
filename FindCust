@@ -1,52 +1,72 @@
 #!/bin/bash
 #find an existing customers from the file CustomerDetails 
 #Enter a customer detail to find a contact
-# check to see if CustomerDetails exists and if not then create it with the header
+# check to see if CustomerDetails exists and if not then print warning and recommended action
+clear
 if grep -q "Address" CustomerDetails 
 	then 
-	echo CustomerDetails already exits 
+	echo -e ${YELLOW}CustomerDetails already exits ${NONE} 
+	sleep 1
+    clear
+    	# ANSI colour an formats moved to more readable variables names, can change echo colours
+	# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
+	NONE='\033[00m'
+	RED='\033[01;31m'
+	GREEN='\033[01;32m'
+	YELLOW='\033[01;33m'
+	BLUE='\033[01;34m'
+	PURPLE='\033[01;35m'
+	CYAN='\033[01;36m'
+	WHITE='\033[01;37m'
+	BOLD='\033[1m'
+	UNDERLINE='\033[4m'
+	echo 
+	echo -e ${BLUE}__________________________________________________________________${NONE} 
+	echo -e "${BLUE} _____ _           _  ____          _                            ${NONE}"
+	echo -e "${BLUE}|  ___(_)_ __   __| |/ ___|   _ ___| |_ ___  _ __ ___   ___ _ __ ${NONE}"
+	echo -e "${BLUE}| |_  | | '_ \ / _' | |  | | | / __| __/ _ \| '_ ' _ \ / _ \ '__|${NONE}"
+	echo -e "${BLUE}|  _| | | | | | (_| | |__| |_| \__ \ || (_) | | | | | |  __/ |   ${NONE}"
+	echo -e "${BLUE}|_|   |_|_| |_|\__,_|\____\__,_|___/\__\___/|_| |_| |_|\___|_|   ${NONE}"                                                              
+	echo -e ${BLUE}__________________________________________________________________${NONE} 
+	echo -e ${BLUE}__________________________________________________________________${NONE} 
+	echo
+	echo -e ${BLUE}"What do you want to search for:"${NONE} 
+	read search
+	# -z checks variable Name to see if it is blank, if it is blank a message is printed and the script restarted
+	while [ -z "$search" ]
+	do  
+	    echo 
+		echo -e ${BLUE}"Invalid input blank spaces are not accepted"${NONE} 
+		echo
+		echo -e ${BLUE}"What do you want to search for:"${NONE} 
+		read search
+	done
+	echo
+	# grep does a count of the successful matches to the string search in CustomerDetails
+	# Which is then applied to a varalable count, we then print out the result
+	count=`grep -c $search CustomerDetails`
+	echo -e ${BLUE}"There are "$count" contacts found matching your search"${NONE} 
+	echo
+	# grep searches for a string in the varable search in CustomerDetails file the -i ignors the case
+	echo -e ${BLUE}=======================================================================================${NONE} 
+	echo
+	grep -i $search CustomerDetails
+	echo
+	echo -e ${BLUE}=======================================================================================${NONE} 
+	echo
 else
-	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+	echo -e ${YELLOW}"Find Customer script can't find custusomers as CustomerDetails file is empty"${NONE} 
+	echo -e ${YELLOW}"Go to Add Customer to create some contacts"${NONE} 
 fi
-clear
-# ANSI colour an formats moved to more readable variables names, can change echo colours
-# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
-NONE='\033[00m'
-RED='\033[01;31m'
-GREEN='\033[01;32m'
-YELLOW='\033[01;33m'
-BLUE='\033[01;34m'
-PURPLE='\033[01;35m'
-CYAN='\033[01;36m'
-WHITE='\033[01;37m'
-BOLD='\033[1m'
-UNDERLINE='\033[4m'
-echo 
-echo -e ${BLUE}__________________________________________________________________${NONE} 
-echo -e "${BLUE} _____ _           _  ____          _                            ${NONE}"
-echo -e "${BLUE}|  ___(_)_ __   __| |/ ___|   _ ___| |_ ___  _ __ ___   ___ _ __ ${NONE}"
-echo -e "${BLUE}| |_  | | '_ \ / _' | |  | | | / __| __/ _ \| '_ ' _ \ / _ \ '__|${NONE}"
-echo -e "${BLUE}|  _| | | | | | (_| | |__| |_| \__ \ || (_) | | | | | |  __/ |   ${NONE}"
-echo -e "${BLUE}|_|   |_|_| |_|\__,_|\____\__,_|___/\__\___/|_| |_| |_|\___|_|   ${NONE}"                                                              
-echo -e ${BLUE}__________________________________________________________________${NONE} 
-echo -e ${BLUE}__________________________________________________________________${NONE} 
-echo
-echo "what do you want to search for:"
-read search
-echo
-echo ================================================================================
-echo
-grep $search CustomerDetails
-echo
-echo ================================================================================
-echo
-echo -e "${RED}Do you wish to return to the Menu ?(y/n) ${NONE}"
+# return to the Menu, anything entered other that y-Y including blank spaces will go to the else option and end the script
+# entering y-Y and you meet the in condition and call the script for Menu
+echo -e "${RED}Enter 'y' to return to the Menu ${NONE}"
+echo -e "${RED}Enter any other key to exit ${NONE}"
 read yesno
-if  [[ $yesno = "y" ]]
+if  [[ $yesno = "y" || $yesno = "Y" ]]
 	then 
 	  ./Menu
 else
 	echo Goodbye
-fi                                                          
-
-
+	exit 113
+fi

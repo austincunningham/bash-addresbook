@@ -2,12 +2,15 @@
 #remove existing customers from the file CustomerDetails 
 #Enter either <Name> or <Alias> to remove
 # check to see if CustomerDetails exists and if not then create it with the header
+clear
 if grep -q "Address" CustomerDetails 
 	then 
 	echo CustomerDetails already exits 
 else
+    echo "Creating CustomerDetails file as none exists"
 	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
 fi
+sleep 1
 clear
 # ANSI colour an formats moved to more readable variables names, can change echo colours
 # the NONE is to turn off the format, echo -e enables the colour, may not use all of these
@@ -31,29 +34,83 @@ echo -e "${PURPLE}|_| \_\___|_| |_| |_|\___/ \_/ \___|\____\__,_|___/\__\___/|_|
 echo -e ${PURPLE}_______________________________________________________________________________ ${NONE}
 echo -e ${PURPLE}_______________________________________________________________________________ ${NONE}
 echo
-echo Enter the Name or Alias of the customer delete :
+echo -e ${PURPLE}Enter the Name or Alias of the customer delete :${NONE}
 read Name
+# -z checks variable Name to see if it is blank, if it is blank a message is printed and the script restarted
+while [ -z "$Name" ]
+do  
+    echo 
+	echo -e ${PURPLE}"Invalid input blank spaces are not accepted"${NONE}
+	echo
+	echo -e ${PURPLE}Enter the Name or Alias of the customer delete :${NONE}
+	read Name
+done
+# grep does a count of the successful matches to the string Name in CustomerDetails
+# Which is then applied to a varalable count, we then print out the result
+count=`grep -c $Name CustomerDetails`
 echo
-echo ================================================================================
+echo -e ${PURPLE}"There are "$count" contacts found matching your search"${NONE}
 echo
-grep $Name CustomerDetails
+# grep searches for a string in the varable Name in CustomerDetails file the -i ignors the case
+echo -e ${PURPLE}=======================================================================================${NONE}
 echo
-echo ================================================================================
-echo "Please confirm you wish to delete (y/n):"
-read confirm
-if [[ $confirm = 'y' ]]
+grep -i $Name CustomerDetails
+echo
+echo -e ${PURPLE}=======================================================================================${NONE}
+echo
+# if count is greater that 1 , narrow down the search by asking the user for more exact details
+if [[ $count -gt 1 ]]
 	then
-	# searches for the string in the Name variable and deletes the line it is on
-	sed -i "/$Name/d" CustomerDetails
-	echo Customer deleted
+    echo -e ${PURPLE}"Enter exact name to narrow the search"${NONE}
+    read Name
+    # use -z again to check for blank input
+    while [ -z "$Name" ]
+	do  
+    	echo 
+		echo -e ${PURPLE}"Invalid input blank spaces are not accepted"${NONE}
+		echo
+		echo -e ${PURPLE}Enter the Name or Alias of the customer delete :${NONE}
+		read Name
+	done
+	echo
+	# new grep search on new input
+	echo -e ${PURPLE}"Refined search results"${NONE}
+	echo
+	echo -e ${PURPLE}=======================================================================================${NONE}
+	echo
+	grep -i $Name CustomerDetails
+	echo
+	echo -e ${PURPLE}=======================================================================================${NONE}
+fi
+# if the count is equal to zero then display message no contact exists
+if [ $count = 0 ]
+   	then
+   	echo
+   	echo -e ${PURPLE}"No contact exists"${NONE}
+else 
+	# else confirm that you wish to delete the results of the last search
+	# anything entered other that y-Y including blank spaces will skip the delete
+    echo  	
+	echo -e ${PURPLE}"Please enter 'y' to confirm you wish to delete "${NONE}
+	echo -e ${PURPLE}"Enter any other key to skip delete "${NONE}
+	read confirm
+	if [[ $confirm = 'y' || $confirm = 'Y' ]]
+		then
+		# searches for the string in the Name variable and deletes the line it is on
+		sed -i "/$Name/d" CustomerDetails
+		echo -e ${PURPLE}Customer deleted${NONE}
+	fi
 fi
 echo
-echo -e "${RED}Do you wish to return to the Menu ?(y/n) ${NONE}"
+# return to the Menu, anything entered other that y-Y including blank spaces will go to the else option and end the script
+# entering y-Y and you meet the if condition and call the script for Menu
+echo -e "${RED}Enter 'y' to return to the Menu ${NONE}"
+echo -e "${RED}Enter any other key to exit ${NONE}"
 read yesno
-if  [[ $yesno = "y" ]]
+if  [[ $yesno = "y" || $yesno = "Y" ]]
 	then 
 	  ./Menu
 else
 	echo Goodbye
+	exit 113
 fi
-

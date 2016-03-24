@@ -27,25 +27,25 @@ echo -e " ${GREEN}             | |  | | |  __/ | | | | | |_| |${NONE}"
 echo -e " ${GREEN}             |_|  |_|  \___| |_| |_|  \__,_|${NONE}"
 echo -e ${GREEN} ____________________________________________________________ ${NONE}
 echo -e ${GREEN} ____________________________________________________________ ${NONE}
-echo -e " ${BLUE} ______________________________________________${NONE} "
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}| Welcome. Please choose one of the following: |${NONE}"
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}|${NONE}   ${YELLOW}1. Add a new Customer ${NONE}                     ${BLUE}|${NONE}"
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}|${NONE}   ${YELLOW}2. Remove an existing Customer ${NONE}            ${BLUE}|${NONE}"
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}|${NONE}   ${YELLOW}3. Search for a Customer ${NONE}                  ${BLUE}|${NONE}"
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}|${NONE}   ${YELLOW}4. E-mail a Customer ${NONE}                      ${BLUE}|${NONE}"
-echo -e " ${BLUE}|                                              |${NONE}"
-echo -e " ${BLUE}| Enter a Number or q to quit :                |${NONE}"
-echo -e " ${BLUE}|______________________________________________|${NONE}"
+echo -e " ${BLUE}       ______________________________________________${NONE} "
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      | Welcome. Please choose one of the following: |${NONE}"
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      |${NONE}   ${YELLOW}1. Add a new Customer ${NONE}                     ${BLUE}|${NONE}"
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      |${NONE}   ${YELLOW}2. Remove an existing Customer ${NONE}            ${BLUE}|${NONE}"
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      |${NONE}   ${YELLOW}3. Search for a Customer ${NONE}                  ${BLUE}|${NONE}"
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      |${NONE}   ${YELLOW}4. E-mail a Customer ${NONE}                      ${BLUE}|${NONE}"
+echo -e " ${BLUE}      |                                              |${NONE}"
+echo -e " ${BLUE}      | Enter a Number or q to quit :                |${NONE}"
+echo -e " ${BLUE}      |______________________________________________|${NONE}"
 echo
 # read waits for input from customer looking for number 1 and 4 will exit with x or q 
 # Menu will reload if none of the conditions ment at the prompt
 read Number
-# this case statment waits for an imput between 1 and 4 and runs the corrisponding script
+# this case statment waits for an input between 1 and 4 and runs the corrisponding script
 case $Number in
 	1) ./AddCust
 	;;
@@ -56,9 +56,21 @@ case $Number in
 	4) ./EmailCust
 	;;
 	q) echo Good Bye
+       exit 113 # force to exit to shell
 	;;
-	x) echo So Long
+	Q) echo So Long
+       exit 113
 	;;
-	*) ./Menu
+	*) # Menu will loop if any character other that 1-4 or q-Q is entered , using wild card for all other input
+       # calling the Menu script with in its self to achieve this
+       clear
+       echo
+       echo -e "${YELLOW} Unknow imput !!!!! you entered: ${NONE}" ${RED}$Number ${NONE}
+       echo
+       echo -e "${YELLOW} Please enter a number between 1 and 4 or q to quit ${NONE}"
+       echo
+       echo -e "${YELLOW} Returning to Menu ${NONE}"
+       sleep 4
+       ./Menu       
 	;;
 esac
