@@ -1,22 +1,6 @@
 #!/bin/bash
 #Email a customers from the file CustomerDetails 
 #Enter a customer email address to email
-# check to see if CustomerDetails exists and contains a valid email address if not then redirect to AddCust to create it 
-# regex is explained further down on this page
-clear
-if grep -q "Address" CustomerDetails 
-	then 
-	echo CustomerDetails already exits 
-	sleep 1
-    clear
-else
-	echo
-	echo "Creating blank CustomerDetails file"
-	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
-	sleep 1
-	clear
-fi
-
 # ANSI colour an formats moved to more readable variables names, can change echo colours
 # the NONE is to turn off the format, echo -e enables the colour, may not use all of these
 NONE='\033[00m'
@@ -29,6 +13,23 @@ CYAN='\033[01;36m'
 WHITE='\033[01;37m'
 BOLD='\033[1m'
 UNDERLINE='\033[4m'
+# check to see if CustomerDetails exists and contains a valid email address if not then redirect to AddCust to create it 
+# regex is explained further down on this page
+clear
+if grep -q "Address" CustomerDetails 
+	then 
+	echo -e ${YELLOW}CustomerDetails already exits${NONE} 
+	sleep 1
+    clear
+else
+	echo
+	echo -e ${YELLOW}"Creating blank CustomerDetails file"${NONE}
+	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+	sleep 1
+	clear
+fi
+
+
 echo
 echo -e ${RED}________________________________________________________________________${NONE} 
 echo -e "${RED} _____                 _ _  ____          _                            ${NONE}"
@@ -162,7 +163,7 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 				echo -e ${RED}================================================================================${NONE}
 				echo
 				echo
-				echo -e ${RED}Enter details of customer you wish to email:${NONE}
+				echo -e ${RED}Enter exact email address of the customer you wish to email:${NONE}
 				read details
 				# -z checks for blank input
 				while [ -z "$details" ]
@@ -205,7 +206,9 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 	    rm temp
     fi
 else
-	echo -e ${RED}"CustomerDetails doesn't contain any valid email address"${NONE}
+	echo
+	echo -e ${YELLOW}"CustomerDetails doesn't contain any valid email address"${NONE}
+	echo -e ${YELLOW}"Recommend that you go to Add Customer to add some valid contacts"${NONE}
 fi
 echo
 # return to the Menu, anything entered other that y-Y including blank spaces will go to the else option and end the script

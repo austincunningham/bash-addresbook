@@ -1,21 +1,6 @@
 #!/bin/bash
 #Add new customers to file CustomerDetails in the format
 #<E-mail Address>   <Name>   <Alias>   <Address>   <Telephone Number>
-# printf allow you to format the input of a print statment, in this case it formats the file CustomerDetails
-# check to see if CustomerDetails exists and if not then create it with the header
-clear
-if grep -q "Address" CustomerDetails 
-	then 
-	echo
-	echo CustomerDetails already exits
-
-else
-	echo
-	echo "Creating CustomerDetails file as none exists"
-	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
-fi
-sleep 1
-clear
 # ANSI colour an formats moved to more readable variables names, can change echo colours
 # the NONE is to turn off the format, echo -e enables the colour, may not use all of these
 NONE='\033[00m'
@@ -28,6 +13,21 @@ CYAN='\033[01;36m'
 WHITE='\033[01;37m'
 BOLD='\033[1m'
 UNDERLINE='\033[4m'
+# printf allow you to format the input of a print statment, in this case it formats the file CustomerDetails
+# check to see if CustomerDetails exists and if not then create it with the header
+clear
+if grep -q "Address" CustomerDetails 
+	then 
+	echo
+	echo -e ${YELLOW}CustomerDetails already exits ${NONE}
+
+else
+	echo
+	echo -e ${YELLOW}"Creating CustomerDetails file as none exists"${NONE}
+	printf "\n%-30s %-8s %-8s %-20s %s" "<E-mail Address>" "<Name>" "<Alias>" "<Address>" "<Telephone Number>" >> CustomerDetails
+fi
+sleep 1
+clear
 echo 
 echo -e ${CYAN}_________________________________________________________________ ${NONE}
 echo -e " ${CYAN}    _       _     _  ____          _                            ${NONE}"

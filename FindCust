@@ -1,6 +1,18 @@
 #!/bin/bash
 #find an existing customers from the file CustomerDetails 
 #Enter a customer detail to find a contact
+# ANSI colour an formats moved to more readable variables names, can change echo colours
+# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
+NONE='\033[00m'
+RED='\033[01;31m'
+GREEN='\033[01;32m'
+YELLOW='\033[01;33m'
+BLUE='\033[01;34m'
+PURPLE='\033[01;35m'
+CYAN='\033[01;36m'
+WHITE='\033[01;37m'
+BOLD='\033[1m'
+UNDERLINE='\033[4m'
 # check to see if CustomerDetails exists and if not then print warning and recommended action
 clear
 if grep -q "Address" CustomerDetails 
@@ -8,18 +20,6 @@ if grep -q "Address" CustomerDetails
 	echo -e ${YELLOW}CustomerDetails already exits ${NONE} 
 	sleep 1
     clear
-    	# ANSI colour an formats moved to more readable variables names, can change echo colours
-	# the NONE is to turn off the format, echo -e enables the colour, may not use all of these
-	NONE='\033[00m'
-	RED='\033[01;31m'
-	GREEN='\033[01;32m'
-	YELLOW='\033[01;33m'
-	BLUE='\033[01;34m'
-	PURPLE='\033[01;35m'
-	CYAN='\033[01;36m'
-	WHITE='\033[01;37m'
-	BOLD='\033[1m'
-	UNDERLINE='\033[4m'
 	echo 
 	echo -e ${BLUE}__________________________________________________________________${NONE} 
 	echo -e "${BLUE} _____ _           _  ____          _                            ${NONE}"
@@ -48,18 +48,46 @@ if grep -q "Address" CustomerDetails
 	echo -e ${BLUE}"There are "$count" contacts found matching your search"${NONE} 
 	echo
 	# grep searches for a string in the varable search in CustomerDetails file the -i ignors the case
-	echo -e ${BLUE}=======================================================================================${NONE} 
+	echo -e ${BLUE}=================================================================================${NONE} 
 	echo
 	grep -i $search CustomerDetails
 	echo
-	echo -e ${BLUE}=======================================================================================${NONE} 
+	echo -e ${BLUE}=================================================================================${NONE} 
 	echo
+	if [[ $count -gt 1 ]]
+		then
+	    echo -e ${BLUE}"Enter exact Email Address to narrow the search"${NONE}
+	    read Name
+	    # use -z again to check for blank input
+	    while [ -z "$Name" ]
+		do  
+	    	echo 
+			echo -e ${BLUE}"Invalid input blank spaces are not accepted"${NONE}
+			echo
+			echo -e ${BLUE}Enter the Name or Alias of the customer delete :${NONE}
+			read Name
+		done
+		echo
+		# new grep search on new input
+		echo -e ${BLUE}"Refined search results"${NONE}
+		echo
+		count=`grep -c $Name CustomerDetails`
+	    echo -e ${BLUE}"There are "$count" contacts found matching your refined search"${NONE}
+		echo -e ${BLUE}=================================================================================${NONE}
+		echo
+		grep -i $Name CustomerDetails
+		echo
+		echo -e ${BLUE}=================================================================================${NONE}
+	fi
 else
-	echo -e ${YELLOW}"Find Customer script can't find custusomers as CustomerDetails file is empty"${NONE} 
+	clear
+	echo
+	echo -e ${YELLOW}"Find Customer script can't find any customers as CustomerDetails file is empty"${NONE} 
 	echo -e ${YELLOW}"Go to Add Customer to create some contacts"${NONE} 
 fi
 # return to the Menu, anything entered other that y-Y including blank spaces will go to the else option and end the script
 # entering y-Y and you meet the in condition and call the script for Menu
+echo
 echo -e "${RED}Enter 'y' to return to the Menu ${NONE}"
 echo -e "${RED}Enter any other key to exit ${NONE}"
 read yesno
