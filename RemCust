@@ -74,11 +74,11 @@ if grep -q "Address" CustomerDetails
 		echo
 		count=`grep -c $Name CustomerDetails`
 	    echo -e ${PURPLE}"There are "$count" contacts found matching your refined search"${NONE}
-		echo -e ${PURPLE}=================================================================================${NONE}
+		echo -e ${PURPLE}================================================================================${NONE}
 		echo
 		grep -i $Name CustomerDetails
 		echo
-		echo -e ${PURPLE}=================================================================================${NONE}
+		echo -e ${PURPLE}================================================================================${NONE}
 	fi
 	# if the count is equal to zero then display message no contact exists
 	if [ $count = 0 ]

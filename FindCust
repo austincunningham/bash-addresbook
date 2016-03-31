@@ -48,11 +48,11 @@ if grep -q "Address" CustomerDetails
 	echo -e ${BLUE}"There are "$count" contacts found matching your search"${NONE} 
 	echo
 	# grep searches for a string in the varable search in CustomerDetails file the -i ignors the case
-	echo -e ${BLUE}=================================================================================${NONE} 
+	echo -e ${BLUE}================================================================================${NONE} 
 	echo
 	grep -i $search CustomerDetails
 	echo
-	echo -e ${BLUE}=================================================================================${NONE} 
+	echo -e ${BLUE}================================================================================${NONE} 
 	echo
 	if [[ $count -gt 1 ]]
 		then
@@ -73,11 +73,11 @@ if grep -q "Address" CustomerDetails
 		echo
 		count=`grep -c $Name CustomerDetails`
 	    echo -e ${BLUE}"There are "$count" contacts found matching your refined search"${NONE}
-		echo -e ${BLUE}=================================================================================${NONE}
+		echo -e ${BLUE}================================================================================${NONE}
 		echo
 		grep -i $Name CustomerDetails
 		echo
-		echo -e ${BLUE}=================================================================================${NONE}
+		echo -e ${BLUE}================================================================================${NONE}
 	fi
 else
 	clear
