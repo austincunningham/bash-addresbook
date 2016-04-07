@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author : Austin Cunningham
 #Email a customers from the file CustomerDetails 
 #Enter a customer email address to email
 # ANSI colour an formats moved to more readable variables names, can change echo colours

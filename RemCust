@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author : Austin Cunningham
 #remove existing customers from the file CustomerDetails 
 #Enter either <Name> or <Alias> to remove
 # ANSI colour an formats moved to more readable variables names, can change echo colours

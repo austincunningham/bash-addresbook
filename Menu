@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author : Austin Cunningham
 # Menu program menu to access four other programs
 # AddCust program to add a customer to an address list
 # RemCust program to remove a customer from an address list

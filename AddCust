@@ -1,4 +1,5 @@
 #!/bin/bash
+# Author : Austin Cunningham
 #Add new customers to file CustomerDetails in the format
 #<E-mail Address>   <Name>   <Alias>   <Address>   <Telephone Number>
 # ANSI colour an formats moved to more readable variables names, can change echo colours
