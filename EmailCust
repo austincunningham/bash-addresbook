@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author : Austin Cunningham
+# Author : Austin Cunningham student id:20073379
 #Email a customers from the file CustomerDetails 
 #Enter a customer email address to email
 # ANSI colour an formats moved to more readable variables names, can change echo colours
@@ -120,7 +120,7 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 		grep -i $details CustomerDetails
 		echo
 		echo -e ${RED}================================================================================${NONE}
-		echo
+		echo $Email
 		# if count is greater that 1 , narrow down the search by asking the user for more exact details
 		if [[ $count -gt 1 ]]
 			then
@@ -148,6 +148,8 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 		# search temp file (use temp as CustomerDetails has a header which awk would detect) 
 		# for line contain details varable and let the first thing on that line equal Email
 		Email=`grep -i "$details" temp | awk '{print $1}'`
+		# write Email variable to file
+		echo $Email > temp2
 			# if Email is blank , displays message and lists CustomerDetails and asks for imput again
 		    while [ -z "$Email" ] 
 			do
@@ -174,8 +176,10 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 					echo
 					echo -e ${RED}"Enter details of customer you wish to email: "${NONE}
 					read details
+					echo are the details being pop $details
 				done
 				Email=`grep -i "$details" temp | awk '{print $1}'`
+				echo $Email > temp2
 			done
 		echo	
 		echo -e ${RED}"Email address : "${NONE} 
@@ -201,10 +205,10 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 			echo -e ${RED}"Message:"${NONE}
 			read Message
 		done
-		echo "$Message" | mailx -s "$Subject" "$Email"
+		echo "$Message" | mailx -s "$Subject" $(<temp2)
 		echo -e ${RED}message sent${NONE}
 		# remove the temp file
-	    rm temp
+	    rm temp temp2
     fi
 else
 	echo

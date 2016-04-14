@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author : Austin Cunningham
+# Author : Austin Cunningham student id:20073379
 #find an existing customers from the file CustomerDetails 
 #Enter a customer detail to find a contact
 # ANSI colour an formats moved to more readable variables names, can change echo colours

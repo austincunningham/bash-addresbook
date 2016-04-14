@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author : Austin Cunningham
+# Author : Austin Cunningham student id:20073379
 #remove existing customers from the file CustomerDetails 
 #Enter either <Name> or <Alias> to remove
 # ANSI colour an formats moved to more readable variables names, can change echo colours
