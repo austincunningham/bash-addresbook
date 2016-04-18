@@ -120,7 +120,7 @@ if grep -q -E -o "\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}\b" CustomerD
 		grep -i $details CustomerDetails
 		echo
 		echo -e ${RED}================================================================================${NONE}
-		echo $Email
+		echo 
 		# if count is greater that 1 , narrow down the search by asking the user for more exact details
 		if [[ $count -gt 1 ]]
 			then

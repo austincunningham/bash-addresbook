@@ -48,6 +48,14 @@ while [ -z "$Name" ]
 do  
     echo 
 	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo -e "${RED}Enter 'y' to Exit ${NONE}"
+	echo -e "${RED}Enter any other key to continue ${NONE}"
+	read yesno
+	if  [[ $yesno = "y" || $yesno = "Y" ]]
+		then 
+		  	echo Goodbye
+			exit 113
+	fi
 	echo
 	echo -e ${CYAN}Name :${NONE}
 	read Name
@@ -59,6 +67,14 @@ while [ -z "$Email" ]
 do  
     echo 
 	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo -e "${RED}Enter 'y' to Exit ${NONE}"
+	echo -e "${RED}Enter any other key to continue ${NONE}"
+	read yesno
+	if  [[ $yesno = "y" || $yesno = "Y" ]]
+		then 
+		  	echo Goodbye
+			exit 113
+	fi
 	echo
 	echo -e ${CYAN}Email :${NONE}
 	read Email
@@ -70,6 +86,14 @@ while [ -z "$Alias" ]
 do  
     echo 
 	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo -e "${RED}Enter 'y' to Exit ${NONE}"
+	echo -e "${RED}Enter any other key to continue ${NONE}"
+	read yesno
+	if  [[ $yesno = "y" || $yesno = "Y" ]]
+		then 
+		  	echo Goodbye
+			exit 113
+	fi
 	echo
 	echo -e ${CYAN}Alias :${NONE}
 	read Alias
@@ -80,7 +104,15 @@ read Address
 while [ -z "$Address" ]
 do  
     echo 
-	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE}
+	echo -e "${RED}Enter 'y' to Exit ${NONE}"
+	echo -e "${RED}Enter any other key to continue ${NONE}"
+	read yesno
+	if  [[ $yesno = "y" || $yesno = "Y" ]]
+		then 
+		  	echo Goodbye
+			exit 113
+	fi 
 	echo
 	echo -e ${CYAN}Address :${NONE}
 	read Address
@@ -92,6 +124,14 @@ while [ -z "$Telephone" ]
 do  
     echo 
 	echo -e ${CYAN}"Invalid input blank spaces are not accepted"${NONE} 
+	echo -e "${RED}Enter 'y' to Exit ${NONE}"
+	echo -e "${RED}Enter any other key to continue ${NONE}"
+	read yesno
+	if  [[ $yesno = "y" || $yesno = "Y" ]]
+		then 
+		  	echo Goodbye
+			exit 113
+	fi
 	echo
 	echo -e ${CYAN}Telephone :${NONE}
 	read Telephone
