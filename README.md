@@ -9,7 +9,8 @@
 ### How do I get set up? ###
 
 * Summary of set up
-* Configuration to run ./Menu
+* Configuration: clone repo,
+ to run **./Menu**
 * Dependencies Bourne again shell, mailutils
 
 
